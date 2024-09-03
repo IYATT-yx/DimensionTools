@@ -4,6 +4,10 @@
 DimensionTools
 |
 |-- DimLock 固化标注(LD)和恢复标注(RD)
+|
+|-- DimSymbol 标注符号
+|    |
+|    |-- 设置参考尺寸（SRD）和取消参考尺寸（CRD）
 ```
 
 ## 测试环境

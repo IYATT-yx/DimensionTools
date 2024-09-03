@@ -14,6 +14,7 @@
     <ClCompile Include="acrxEntryPoint.cpp" />
     <ClCompile Include="DimensionTools.cpp" />
     <ClCompile Include="DimLock.cpp" />
+    <ClCompile Include="DimSymbol.cpp" />
     <ClCompile Include="DocData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -24,6 +25,7 @@
   <ItemGroup>
     <ClInclude Include="DimensionTools.hpp" />
     <ClInclude Include="DimLock.hpp" />
+    <ClInclude Include="DimSymbol.hpp" />
     <ClInclude Include="DocData.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />

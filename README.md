@@ -8,6 +8,7 @@ DimensionTools
 |-- DimSymbol 标注符号
 |    |
 |    |-- 设置参考尺寸（SRD）和取消参考尺寸（CRD）
+|    |-- 添加直径符号（SD）
 ```
 
 ## 测试环境

@@ -38,6 +38,33 @@ void DimSymbol::cbRemoveParentheses(AcDbDimension* pDim)
 	}
 }
 
+void DimSymbol::cbAddDiameter(AcDbDimension* pDim)
+{
+	AcString dimText;
+	pDim->dimensionText(dimText);
+
+	const AcString target = L"<>";
+	const AcString diameterSymbol = L"%%c";
+	if (dimText.isEmpty())
+	{
+		dimText = diameterSymbol + target;
+	}
+	else
+	{
+		int pos = dimText.find(target);
+		if (pos != -1)
+		{
+			dimText.insert(pos, diameterSymbol);
+		}
+		else
+		{
+			acutPrintf(L"非实体尺寸驱动标注，无法添加直径符号。\n");
+			return;
+		}
+	}
+	pDim->setDimensionText(dimText.kACharPtr());
+}
+
 void DimSymbol::selectAndProcess(CallbackFun pFun)
 {
 	ads_name  ent;
@@ -87,4 +114,9 @@ void DimSymbol::cmdSetReferenceDimension()
 void DimSymbol::cmdCancelReferenceDimension()
 {
     selectAndProcess(cbRemoveParentheses);
+}
+
+void DimSymbol::cmdSetDiameter()
+{
+	selectAndProcess(cbAddDiameter);
 }

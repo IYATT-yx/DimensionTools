@@ -13,6 +13,11 @@ public:
 	 */
 	static void cmdCancelReferenceDimension();
 
+	/**
+	 * @brief 设置直径尺寸，添加直径符号
+	 */
+	static void cmdSetDiameter();
+
 private:
 	// 定义回调函数类型
 	typedef void (*CallbackFun)(AcDbDimension*);
@@ -28,6 +33,12 @@ private:
 	 * @param[in] pDim 待处理的标注对象
 	 */
 	static void cbRemoveParentheses(AcDbDimension* pDim);
+
+	/**
+	 * @brief 添加直径符号
+	 * @param[in] pDim 待处理的标注对象
+	 */
+	static void cbAddDiameter(AcDbDimension* pDim);
 
 	/**
 	 * @brief 选择标注并调用回调函数处理

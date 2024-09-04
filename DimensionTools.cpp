@@ -9,6 +9,7 @@ void DimensionTools::init()
 	acedRegCmds->addCommand(L"IYATTyxDimensionTools", L"RD", L"RD", ACRX_CMD_MODAL, DimLock::cmdResetDim); // RD - Reset Dimension
 	acedRegCmds->addCommand(L"IYATTyxDimensionTools", L"SRD", L"SRD", ACRX_CMD_MODAL, DimSymbol::cmdSetReferenceDimension); // SRD - Set Reference Dimension
 	acedRegCmds->addCommand(L"IYATTyxDimensionTools", L"CRD", L"CRD", ACRX_CMD_MODAL, DimSymbol::cmdCancelReferenceDimension); // CRD - Cancel Reference Dimension
+	acedRegCmds->addCommand(L"IYATTyxDimensionTools", L"SD", L"SD", ACRX_CMD_MODAL, DimSymbol::cmdSetDiameter); // SD - Set Diameter
 }
 
 void DimensionTools::unload()

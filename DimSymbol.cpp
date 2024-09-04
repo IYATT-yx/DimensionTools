@@ -69,11 +69,12 @@ void DimSymbol::selectAndProcess(CallbackFun pFun)
 		if (!pEnt->isKindOf(AcDbDimension::desc()))
 		{
             acutPrintf(L"选择的不是标注对象。\n");
-			continue;
+			goto END;
 		}
 
 		AcDbDimension* pDim = AcDbDimension::cast(pEnt);
 		pFun(pDim);
+END:
 		pEnt->close();
 	}
 }

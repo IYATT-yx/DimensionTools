@@ -65,6 +65,85 @@ void DimSymbol::cbAddDiameter(AcDbDimension* pDim)
 	pDim->setDimensionText(dimText.kACharPtr());
 }
 
+AcString DimSymbol::beginningOrEnd = "";
+AcString DimSymbol::customSymbol = "";
+
+void DimSymbol::cbAddCustomSymbol(AcDbDimension* pDim)
+{
+	if (DimSymbol::beginningOrEnd.empty())
+	{
+		acedGetString(Adesk::kTrue, L"\n请确认在行首(B)或行尾(E)插入符号：B?",DimSymbol::beginningOrEnd);
+
+		// 输入为空，默认行首
+		if (DimSymbol::beginningOrEnd.empty())
+		{
+			DimSymbol::beginningOrEnd = "B";
+		}
+
+		acedGetString(Adesk::kFalse, L"\n请输入要插入的符号：", DimSymbol::customSymbol);
+	}
+
+	AcString dimText;
+	pDim->dimensionText(dimText);
+
+	if (DimSymbol::beginningOrEnd == "B" || DimSymbol::beginningOrEnd == "b")
+	{
+        dimText = DimSymbol::customSymbol + dimText;
+	}
+	else
+	{
+        dimText = dimText + DimSymbol::customSymbol;
+	}
+
+    pDim->setDimensionText(dimText.kACharPtr());
+}
+
+void DimSymbol::cbRemoveCustomSymbol(AcDbDimension* pDim)
+{
+	if (DimSymbol::beginningOrEnd.empty())
+	{
+		acedGetString(Adesk::kTrue, L"\n请确认要在行首(B)或行尾(E)删除的符号：B?", DimSymbol::beginningOrEnd);
+
+		// 输入为空，默认行首
+		if (DimSymbol::beginningOrEnd.empty())
+		{
+			DimSymbol::beginningOrEnd = "B";
+		}
+
+		acedGetString(Adesk::kFalse, L"\n请输入要插入的符号：", DimSymbol::customSymbol);
+	}
+
+	AcString dimText;
+	pDim->dimensionText(dimText);
+
+	if (DimSymbol::beginningOrEnd == "B" || DimSymbol::beginningOrEnd == "b")
+	{
+		if (dimText.substr(0, DimSymbol::customSymbol.length()) == DimSymbol::customSymbol)
+		{
+			dimText = dimText.substr(DimSymbol::customSymbol.length());
+		}
+		else
+		{
+            acutPrintf(L"行首没有要删除的符号。\n");
+			return;
+		}
+	}
+	else
+	{
+		if (dimText.substr(dimText.length() - DimSymbol::customSymbol.length(), DimSymbol::customSymbol.length()) == DimSymbol::customSymbol)
+		{
+            dimText = dimText.substr(0, dimText.length() - DimSymbol::customSymbol.length());
+		}
+		else
+		{
+            acutPrintf(L"行尾没有要删除的符号。\n");
+            return;
+		}
+	}
+
+	pDim->setDimensionText(dimText.kACharPtr());
+}
+
 void DimSymbol::selectAndProcess(CallbackFun pFun)
 {
 	ads_name  ent;
@@ -78,6 +157,7 @@ void DimSymbol::selectAndProcess(CallbackFun pFun)
 		if (ret != RTNORM)
 		{
 			acutPrintf(L"取消命令。\n");
+			DimSymbol::beginningOrEnd = "";
 			break;
 		}
 
@@ -119,4 +199,14 @@ void DimSymbol::cmdCancelReferenceDimension()
 void DimSymbol::cmdSetDiameter()
 {
 	selectAndProcess(cbAddDiameter);
+}
+
+void DimSymbol::cmdSetCustomSymbol()
+{
+	selectAndProcess(cbAddCustomSymbol);
+}
+
+void DimSymbol::cmdCancelCustomSymbol()
+{
+	selectAndProcess(cbRemoveCustomSymbol);
 }

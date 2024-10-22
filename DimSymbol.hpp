@@ -18,6 +18,16 @@ public:
 	 */
 	static void cmdSetDiameter();
 
+	/**
+	 * @brief 添加自定义符号
+	 */
+	static void cmdSetCustomSymbol();
+
+	/**
+	 * @brief 取消自定义符号
+	 */
+	static void cmdCancelCustomSymbol();
+
 private:
 	// 定义回调函数类型
 	typedef void (*CallbackFun)(AcDbDimension*);
@@ -45,4 +55,22 @@ private:
 	 * @param[in] callback 用于执行处理的回调函数
 	 */
 	static void selectAndProcess(CallbackFun callback);
+
+	/**
+	 * @brief 在行首或行尾添加自定义符号
+	 * @param pDim 待处理的标注对象
+	 */
+	static void cbAddCustomSymbol(AcDbDimension* pDim);
+
+	/**
+	 * @brief 在行首或行尾移除自定义符号
+	 * @param pDim 待处理的标注对象
+	 */
+	static void cbRemoveCustomSymbol(AcDbDimension* pDim);
+
+	// 用于标识处理行首还是行尾
+	static AcString beginningOrEnd;
+
+	// 用于存储用户输入的要添加或删除的符号
+	static AcString customSymbol;
 };
